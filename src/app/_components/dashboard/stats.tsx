@@ -16,12 +16,12 @@ export default async function Stats() {
   <div className="grid grid-cols-2 gap-8 lg:grid-cols-2">
       <div className="p-6 bg-[#171D18] text-white rounded-2xl h-56 flex flex-col items-center">
         <h2 className="text-xl font-bold">Balance</h2>
-        <p className="text-4xl h-min mt-10">{user?.financialData?.balance}</p>
+        <p className="text-4xl h-min mt-10">{user?.financialData ? user?.financialData?.balance : 0}</p>
       </div>
 
       <div className="p-6 bg-[#171D18] text-white rounded-2xl h-56 flex flex-col items-center">
         <h2 className="text-xl font-bold">Budget</h2>
-        <p className="text-4xl h-min mt-10">{user?.financialData?.budget}</p>
+        <p className="text-4xl h-min mt-10">{user?.financialData ? user?.financialData?.budget : 0}</p>
       </div>
 
       <div className="p-6 bg-[#171D18] text-white rounded-2xl h-56 flex flex-col items-center">
@@ -31,7 +31,7 @@ export default async function Stats() {
 
       <div className="p-6 bg-[#171D18] text-white rounded-2xl h-56 flex flex-col items-center">
         <h2 className="text-xl font-bold">Salary</h2>
-        <p className="text-4xl h-min mt-10">{user?.financialData?.salary}</p>
+        <p className="text-4xl h-min mt-10">{user?.financialData ? user?.financialData?.salary : 0}</p>
       </div>
     </div>
   );
