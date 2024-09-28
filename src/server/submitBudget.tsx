@@ -8,11 +8,14 @@ export default async function submitBudgetPreferences(e: FormData,categories: Ca
 	const session = await getServerAuthSession();
 	if(!session) return;
 
-	const formData = await e;
+	const formData = await e as typeof e &{
+		monthlySalary: {value: string},
+		debt: {value: string},
+	};
 
 	const financialData = {
-		monthlySalary: parseInt(formData.get('monthlySalary')),
-		debt: parseInt(formData.get('debt')),
+		monthlySalary: parseInt(formData.monthlySalary.value),
+		debt: parseInt(formData.debt.value),
 	} 
 
 	const user = await api.user.getById(session?.user.id);
