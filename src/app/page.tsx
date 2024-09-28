@@ -4,6 +4,7 @@ import { LatestPost } from "note/app/_components/post";
 import { getServerAuthSession } from "note/server/auth";
 import { api, HydrateClient } from "note/trpc/server";
 import Homepage from "./_components/main_page";
+import Navbar from "./_components/navbar";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -13,6 +14,7 @@ export default async function Home() {
 
   return (
     <>
+    <Navbar />
     <Homepage />
     </>
     
