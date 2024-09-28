@@ -1,7 +1,8 @@
 import { name } from "drizzle-orm";
-import {Input} from "n/components/ui/input";
-import { Label } from "n/components/ui/label";
-import { Slider } from "n/components/ui/slider";
+import { Input } from "note/n/components/ui/input";
+import { Label } from "note/n/components/ui/label";
+import { Slider } from "note/n/components/ui/slider";
+
 
 
 enum ExpenseType {
