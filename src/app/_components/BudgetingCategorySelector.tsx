@@ -1,10 +1,14 @@
 import { name } from "drizzle-orm";
-import {Input} from "n/components/ui/input";
-import { Label } from "n/components/ui/label";
-import { Slider } from "n/components/ui/slider";
+import {Input} from "src/n/components/ui/input";
+import { Label } from "src/n/components/ui/label";
+import { Slider } from "src/n/components/ui/slider";
+import { Button } from "src/n/components/ui/button";
 
+import { useState } from "react";
+import submitBudgetPreferences from "src/server/submitBudget";
+import CreateCategory from "./createCategory";
 
-enum ExpenseType {
+export enum ExpenseType {
 	fixed,
 	obligatoryRange,
 	savings,
@@ -16,38 +20,55 @@ type Category = {
 	type: ExpenseType
 }
 
-export default function BudgetCategorySelector(){
-	const categories: Category[] = [
-		{
-			id:1,
-			name: "Rent",
-			type: ExpenseType.fixed,
-		},
-		{
-			id: 2,
-			name: "Groceries",
-			type: ExpenseType.obligatoryRange,
-		},
-		{
-			id: 3,
-			name: "Savings Account",
-			type: ExpenseType.savings,
-		},
-		{
-			id: 4,
-			name: "Dinning out",
-			type: ExpenseType.leisure
-		},
-		{
-			id:5,
-			name:"Debt Repayment",
-			type: ExpenseType.obligatoryRange,
-		},
+const DefaultCategories: Category[] = [
+	{
+		id:1,
+		name: "Rent",
+		type: ExpenseType.fixed,
+	},
+	{
+		id: 2,
+		name: "Groceries",
+		type: ExpenseType.obligatoryRange,
+	},
+	{
+		id: 3,
+		name: "Savings Account",
+		type: ExpenseType.savings,
+	},
+	{
+		id: 4,
+		name: "Dinning out",
+		type: ExpenseType.leisure
+	},
+	{
+		id:5,
+		name:"Debt Repayment",
+		type: ExpenseType.obligatoryRange,
+	},
 
-	]
+]
+export default function BudgetCategorySelector(){
+	const newCategories: Category[] = []
+	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
 	
+	
+	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
+		
+		const newCategory: Category = {
+				id:10,
+				name:categoryName,
+				type: categoryType,
+			};
+			newCategories.push(newCategory);
+		setCategories([
+			...categories,
+			newCategory,
+			
+		]);
+	}
 	const renderInputType= (category: Category) => {
-		const inputSlider = (<Slider className="w-24"></Slider>)
+		const inputSlider = (<Slider className="w-24 accent-blue-500"></Slider>)
 		switch(category.type){
 			case ExpenseType.fixed:
 				return <Input className="w-24"></Input>;
@@ -60,7 +81,7 @@ export default function BudgetCategorySelector(){
 		}
 	}
 	return (
-		<div className="flex flex-1 justify-center items-start w-2/4 h-3/4 space-y-6 flex-col bg-white  scroll-smooth overflow-y-auto m-auto mt-1/6">
+		<form action={submitBudgetPreferences} className="flex flex-1 justify-center items-start w-2/4 h-3/4 space-y-6 flex-col bg-white  scroll-smooth overflow-y-auto m-auto mt-1/6">
 			<li key={1}>
 				<Input placeholder="Monthly Salary"></Input>
 			</li>
@@ -73,6 +94,8 @@ export default function BudgetCategorySelector(){
 					{renderInputType(category)}
 				</li>)
 			})}
-		</div>
+			<CreateCategory  onClickParent={addCategory}></CreateCategory>
+			<Button className="bg-blue-600"  type="submit">Submit</Button>
+		</form>
 	)
 }
