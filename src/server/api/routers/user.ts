@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import {Category} from "src/app/_components/BudgetingCategorySelector";
 
 export const userRouter = createTRPCRouter({
     getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
@@ -16,4 +17,11 @@ export const userRouter = createTRPCRouter({
 
         return user;
     }),
+	getCategoriesOfUser: publicProcedure.input(z.string()).query(async ({ctx,input}) => {
+		const categories = await ctx.db.query.userSpendingCategories.findFirst({
+            where: (category, { eq }) => eq(category?.userId, input),
+        });
+
+		return categories;
+	})
 })

@@ -9,16 +9,19 @@ import { useState } from "react";
 import submitBudgetPreferences from "src/server/submitBudget";
 import CreateCategory from "./createCategory";
 
+
+
 export enum ExpenseType {
 	fixed,
 	obligatoryRange,
 	savings,
 	leisure,
 }
-type Category = {
+export type Category = {
 	id: number,
 	name: string,
 	type: ExpenseType
+	value: number,
 }
 
 const DefaultCategories: Category[] = [
@@ -26,30 +29,38 @@ const DefaultCategories: Category[] = [
 		id:1,
 		name: "Rent",
 		type: ExpenseType.fixed,
+		value: 0,
 	},
 	{
 		id: 2,
 		name: "Groceries",
 		type: ExpenseType.obligatoryRange,
+		value: 0,
 	},
 	{
 		id: 3,
 		name: "Savings Account",
 		type: ExpenseType.savings,
+		value: 0,
 	},
 	{
 		id: 4,
 		name: "Dinning out",
-		type: ExpenseType.leisure
+		type: ExpenseType.leisure,
+		value: 0,
 	},
 	{
 		id:5,
 		name:"Debt Repayment",
 		type: ExpenseType.obligatoryRange,
+		value: 0,
 	},
 
 ]
-export default function BudgetCategorySelector(){
+interface BudgetCategorySelectorProps {
+	userId: string | undefined,
+}
+export default function BudgetCategorySelector({userId}: BudgetCategorySelectorProps){
 	const newCategories: Category[] = []
 	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
 	
@@ -60,6 +71,7 @@ export default function BudgetCategorySelector(){
 				id:10,
 				name:categoryName,
 				type: categoryType,
+				value: 0,
 			};
 			newCategories.push(newCategory);
 		setCategories([
@@ -82,12 +94,12 @@ export default function BudgetCategorySelector(){
 		}
 	}
 	return (
-		<form action={submitBudgetPreferences} className="flex flex-1 justify-center items-start w-2/4 h-3/4 space-y-6 flex-col bg-white  scroll-smooth overflow-y-auto m-auto mt-1/6">
+		<form method="post" action={submitBudgetPreferences} className="flex flex-1 justify-center items-start w-2/4 h-3/4 space-y-6 flex-col bg-white  scroll-smooth overflow-y-auto m-auto mt-1/6">
 			<li key={1}>
-				<Input placeholder="Monthly Salary"></Input>
+				<Input placeholder="Monthly Salary" name="monthlySalary"></Input>
 			</li>
 			<li key={2}>
-				<Input placeholder="Debt"></Input>
+				<Input name="debt" placeholder="Debt"></Input>
 			</li>
 			{categories.map(category => {
 				return (<li key={category.id + 2} className="flex flex-grow space-x-6">
