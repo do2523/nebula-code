@@ -1,69 +1,73 @@
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "note/n/components/ui/table"
-   
-  const users = [
-    {
-      rank: "1",
-      name: "Gabriel",
-      streak: "30",
-      points: "320",
-    },
-    {
-      rank: "2",
-      name: "Jhon",
-      streak: "27",
-      points: "300",
-    },
-    {
-      rank: "3",
-      name: "Alice",
-      streak: "20",
-      points: "220",
-    },
-    {
-      rank: "4",
-      name: "Alex",
-      streak: "18",
-      points: "210",
-    },
-    {
-      rank: "5",
-      name: "James",
-      streak: "1",
-      points: "16",
-    },
-  ]
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "note/n/components/ui/table";
+
+const users = [
+  {
+    rank: "1",
+    name: "Gabriel",
+    streak: "30",
+    points: "320",
+  },
+  {
+    rank: "2",
+    name: "Jhon",
+    streak: "27",
+    points: "300",
+  },
+  {
+    rank: "3",
+    name: "Alice",
+    streak: "20",
+    points: "220",
+  },
+  {
+    rank: "4",
+    name: "Alex",
+    streak: "18",
+    points: "210",
+  },
+  {
+    rank: "5",
+    name: "James",
+    streak: "1",
+    points: "16",
+  },
+];
 
 export default function Leaderboard() {
-            return (
-              <Table>
-                <TableCaption>Leaderbord of best users.</TableCaption>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Rank</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Streak</TableHead>
-                    <TableHead className="text-right">Points</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((user) => (
-                    <TableRow key={user.rank}>
-                      <TableCell className="font-medium">{user.rank}</TableCell>
-                      <TableCell>{user.name}</TableCell>
-                      <TableCell>{user.streak}</TableCell>
-                      <TableCell className="text-right">{user.points}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )
+  return (
+    <div className="w-full bg-black text-white p-6 shadow-md h-screen">
+      <Table className="min-w-full">
+        <TableCaption className="text-green-500 text-lg mb-4">
+          Leaderboard of Best Users
+        </TableCaption>
+        <TableHeader>
+          <TableRow className="border-b border-gray-700">
+            <TableHead className="w-[100px] text-green-400">Rank</TableHead>
+            <TableHead className="text-green-400">Name</TableHead>
+            <TableHead className="text-green-400">Streak</TableHead>
+            <TableHead className="text-right text-green-400">Points</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.rank} className="border-b border-gray-700 hover:bg-gray-900">
+              <TableCell className="font-medium text-white">{user.rank}</TableCell>
+              <TableCell className="text-white">{user.name}</TableCell>
+              <TableCell className="text-white">{user.streak}</TableCell>
+              <TableCell className="text-right text-white">{user.points}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
 }
