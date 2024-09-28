@@ -1,4 +1,4 @@
-import { name } from "drizzle-orm";
+"use client"
 import { Input } from "src/n/components/ui/input";
 import { Label } from "src/n/components/ui/label";
 import { Slider } from "src/n/components/ui/slider";
