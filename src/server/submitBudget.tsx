@@ -11,8 +11,8 @@ export default async function submitBudgetPreferences(e: React.SyntheticEvent,ca
 	const formData = await e;
 
 	const financialData = {
-		monthlySalary: formData.get('monthlySalary'),
-		debt: formData.get('debt'),
+		monthlySalary: parseInt(formData.get('monthlySalary')),
+		debt: parseInt(formData.get('debt')),
 	} 
 
 	const user = await api.user.getById(session?.user.id);

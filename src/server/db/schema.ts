@@ -45,7 +45,7 @@ export const posts = createTable(
 export const financialData = createTable("financialData", {
   userId: varchar("user_id", { length: 255 })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id).primaryKey(),
   salary: bigint("salary", { mode: 'number' }).notNull().$default(() => 0),
   balance: bigint("balance", { mode: 'number' }).notNull().$default(() => 0),
   budget: bigint("budget", { mode: 'number' }).notNull().$default(() => 0),
