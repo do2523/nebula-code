@@ -47,8 +47,8 @@ export default function Leaderboard() {
   return (
     <div className="flex flex-col">
       <Navbar />
-      <div className="w-full text-white p-6 mx-2 shadow-md rounded-md mt-16">
-        <Table className="min-w-full">
+      <div className="w-screen text-white p-6 shadow-md rounded-md mt-16">
+        <Table className="">
           <TableCaption className="text-green-500 text-lg mb-4">
             Leaderboard of Best Users
           </TableCaption>
