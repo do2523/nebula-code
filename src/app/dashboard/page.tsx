@@ -3,8 +3,11 @@ import Navbar from '../_components/navbar';
 import Spending from '../_components/dashboard/spending';
 import Transactions from '../_components/dashboard/transactions';
 import Stats from '../_components/dashboard/stats';
+import { getServerAuthSession } from 'note/server/auth';
+import { api } from 'note/trpc/server';
+import { redirect } from 'next/navigation';
 
-export default function Dashboard() {
+export default async function Dashboard() {
   return (
     <div>
       <Navbar />
