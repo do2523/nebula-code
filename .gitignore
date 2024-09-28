@@ -46,4 +46,4 @@ yarn-error.log*
 .idea
 
 # lock files
-package-lock.json
+./package-lock.json
