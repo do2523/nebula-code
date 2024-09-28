@@ -56,7 +56,10 @@ export default function Gemini({ topic }: GeminiProps) {
             }
         };
 
-        generateContent();
+        generateContent().catch(err => {
+            setError("Failed to generate content");
+            console.error("Error generating content:", err);
+        });
     }, [topic]); // Re-run the effect if the `topic` prop changes
 
     return (
