@@ -42,9 +42,15 @@ export const posts = createTable(
 );
 
 export const financialData = createTable("financialData", {
+  userId: varchar("user_id", { length: 255 })
+      .notNull()
+      .references(() => users.id),
   salary: bigint("salary", { mode: 'number' }),
   debt: bigint("debt", { mode: 'number' }),
-});
+},
+(data) => ({
+  userIdIdx: index("financialData_user_id_idx").on(data.userId),
+}));
 
 export const financialDataRelations = relations(financialData, ({ one }) => ({
   users: one(financialData),
