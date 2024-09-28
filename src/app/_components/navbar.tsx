@@ -11,7 +11,9 @@ export default async function Navbar(){
   return (
     <>
     <nav className="w-full bg-gray-900 flex justify-between items-center px-8 py-4 fixed top-0 left-0 right-0 shadow-lg z-50">
+      <Link href={session ? '/dashboard' : '/'}>
       <div className="text-2xl font-bold text-green-300">Nebula Finance</div>
+      </Link>
       <div className="flex items-center space-x-6">
         <Link href="/gemini">
           <h1 className="bg-gray-700 hover:bg-gray-800 text-white font-bold px-4 py-2 rounded transition duration-300">AI Finance</h1>

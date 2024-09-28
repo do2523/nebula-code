@@ -46,3 +46,5 @@ package.json
 
 # idea files
 .idea
+
+package-lock.json

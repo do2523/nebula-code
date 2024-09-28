@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  bigint,
   index,
   integer,
   pgTableCreator,
@@ -40,6 +41,15 @@ export const posts = createTable(
   })
 );
 
+export const financialData = createTable("financialData", {
+  salary: bigint("salary", { mode: 'number' }),
+  debt: bigint("debt", { mode: 'number' }),
+});
+
+export const financialDataRelations = relations(financialData, ({ one }) => ({
+  users: one(financialData),
+}))
+
 export const users = createTable("user", {
   id: varchar("id", { length: 255 })
     .notNull()
@@ -54,8 +64,9 @@ export const users = createTable("user", {
   image: varchar("image", { length: 255 }),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
   accounts: many(accounts),
+  financialData: one(financialData),
 }));
 
 export const accounts = createTable(
