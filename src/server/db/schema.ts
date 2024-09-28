@@ -77,6 +77,7 @@ export const users = createTable("user", {
 export const usersRelations = relations(users, ({ many, one }) => ({
   accounts: many(accounts),
   financialData: one(financialData),
+  userSpendingCategory: many(userSpendingCategories),
 }));
 
 export const accounts = createTable(
@@ -156,10 +157,10 @@ export const userSpendingCategories = createTable(
 	"userSpendingCategories",
 	{
 		id: varchar("id",{length:256}).notNull().$defaultFn(() => crypto.randomUUID()),
+    userId: varchar("userId",{length: 255}).notNull().references(() => users.id),
 		categoryName: varchar("categoryName",{length:256}).notNull(),
 		categoryType: expenseType('expenseType'),
 		value: integer('value'),
 	}
-
-
 )
+
