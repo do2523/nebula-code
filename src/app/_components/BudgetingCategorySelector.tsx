@@ -63,7 +63,7 @@ export default function BudgetCategorySelector({userId}: BudgetCategorySelectorP
 	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
 	
 	const handleSubmit = (e: FormData) => {
-		submitBudgetPreferences(e,categories);
+		 submitBudgetPreferences(e,categories);
 	}
 	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
 		

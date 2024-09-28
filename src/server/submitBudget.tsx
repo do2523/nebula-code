@@ -8,7 +8,7 @@ export default async function submitBudgetPreferences(e: FormData,categories: Ca
 	const session = await getServerAuthSession();
 	if(!session) return;
 
-	const formData = await e as typeof e &{
+	const formData = e as typeof e &{
 		monthlySalary: {value: string},
 		debt: {value: string},
 	};
@@ -20,9 +20,9 @@ export default async function submitBudgetPreferences(e: FormData,categories: Ca
 
 	const user = await api.user.getById(session?.user.id);
 	if(!user?.financialData) {
-		api.financialData.createForUser({ userId: session.user.id });
+		await api.financialData.createForUser({ userId: session.user.id });
 	}
 	
-	api.user.updateSalary({ userId: session.user.id, salary: financialData.monthlySalary });
-	api.user.updateDebt({ userId: session.user.id, debt: financialData.debt });
+	await api.user.updateSalary({ userId: session.user.id, salary: financialData.monthlySalary });
+	await api.user.updateDebt({ userId: session.user.id, debt: financialData.debt });
 }
