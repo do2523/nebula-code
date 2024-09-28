@@ -6,6 +6,7 @@ import { Button } from "src/n/components/ui/button";
 import { useState } from "react";
 
 import CreateCategory from "./createCategory";
+import submitBudgetPreferences from "note/server/submitBudget";
 
 
 
@@ -57,14 +58,13 @@ const DefaultCategories: Category[] = [
 ]
 interface BudgetCategorySelectorProps {
 	userId: string | undefined,
-	onSubmit: (e: FormData,categories: Category[]) => void,
 }
-export default function BudgetCategorySelector({userId,onSubmit}: BudgetCategorySelectorProps){
-	const newCategories: Category[] = []
+export default function BudgetCategorySelector({userId}: BudgetCategorySelectorProps){
+	const newCategories: Category[] = [];
 	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
 	
 	const handleSubmit = (e: FormData) => {
-		 onSubmit(e,categories);
+		 submitBudgetPreferences(e,categories);
 	}
 	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
 		
@@ -81,7 +81,23 @@ export default function BudgetCategorySelector({userId,onSubmit}: BudgetCategory
 			
 		]);
 	}
-	
+	const handleValueChange = (key: string,newValue: number | undefined) => {
+		if(undefined == newValue)
+			return;
+		console.log(newValue);
+		const newCategories = categories.map(category => {
+			if(category.id == key){
+				console.log(category.id);				
+				category.value = newValue;
+				return category;
+			}
+			else{
+				return category;
+			}
+		})
+		console.log(categories);
+		setCategories(newCategories);
+	}
 	
 	return (
 		<form method="post" action={handleSubmit} className="flex flex-1 justify-center items-start w-2/4 h-3/4 space-y-6 flex-col bg-white  scroll-smooth overflow-y-auto m-auto mt-1/6">
@@ -92,7 +108,7 @@ export default function BudgetCategorySelector({userId,onSubmit}: BudgetCategory
 				<Input name="debt" placeholder="Debt"></Input>
 			</li>
 			{categories.map(category => {
-				return <CategoryInput category={category} key={category.id}></CategoryInput>
+				return <CategoryInput category={category} key={category.id} handleValueChange={handleValueChange}></CategoryInput>
 			})}
 			<CreateCategory  onClickParent={addCategory}></CreateCategory>
 			<Button className="bg-blue-600"  type="submit">Submit</Button>
