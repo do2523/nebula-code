@@ -7,16 +7,13 @@ import { useState } from "react"
 
 interface CategoryInputProps {
 	category: Category,
-	key: string,
+	handleValueChange: (key: string,newValue: number | undefined) => void,
 }
-export default function CategoryInput({category,key} : CategoryInputProps){
-	const [categoryValue,setCategoryValue] = useState(0);
+export default function CategoryInput({category,handleValueChange} : CategoryInputProps){
 
-	//const handleChangeCategoryValue = () => {
 
-	//}
 	const renderInputType= (category: Category) => {
-		const inputSlider = (<Slider className="w-24 accent-blue-500"></Slider>)
+		const inputSlider = (<Slider className="w-24 accent-blue-500" max={100} min={0} onValueChange={handleChangeCategoryValue}></Slider>)
 		switch(category.type){
 			case ExpenseType.fixed:
 				return <Input className="w-24"></Input>;
@@ -28,11 +25,15 @@ export default function CategoryInput({category,key} : CategoryInputProps){
 				return inputSlider;
 		}
 	}
-	const handleChangeCategoryValue = () => {
-		console.log("Do something");
+	const handleChangeCategoryValue = (number: number[]) => {
+		if(number == undefined){
+			return;
+		}
+		handleValueChange(category.id,number[0]);
+		
 	}
 	return (
-		<li key={category.id + 2} className="flex flex-grow space-x-6" onChange={handleChangeCategoryValue}>
+		<li key={category.id + 2} className="flex flex-grow space-x-6">
 				<Label className="text-white-600">{category.name}</Label>
 					{renderInputType(category)}
 				</li>
