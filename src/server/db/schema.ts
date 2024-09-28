@@ -9,6 +9,7 @@ import {
   text,
   timestamp,
   varchar,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -148,3 +149,17 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+export const expenseType = pgEnum('ExpenseType', ['fixed','obligatoryRange','savings','leisure']);
+
+export const userSpendingCategories = createTable(
+	"userSpendingCategories",
+	{
+		id: varchar("id",{length:256}).notNull().$defaultFn(() => crypto.randomUUID()),
+		categoryName: varchar("categoryName",{length:256}).notNull(),
+		categoryType: expenseType('expenseType'),
+		value: integer('value'),
+	}
+
+
+)
