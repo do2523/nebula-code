@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import {Category} from "src/app/_components/BudgetingCategorySelector";
+import { financialData } from "note/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const userRouter = createTRPCRouter({
     getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
@@ -17,5 +19,13 @@ export const userRouter = createTRPCRouter({
         });
 
 		return categories;
-	})
+	}),
+
+    updateSalary: protectedProcedure.input(z.object({userId: z.string(), salary: z.number()})).mutation(async ({ctx, input}) => {
+        await ctx.db.update(financialData).set({ salary: input.salary }).where(eq(financialData.userId, input.userId));
+    }),
+
+    updateDebt: protectedProcedure.input(z.object({userId: z.string(), debt: z.number()})).mutation(async ({ctx, input}) => {
+        await ctx.db.update(financialData).set({ debt: input.debt }).where(eq(financialData.userId, input.userId));
+    }),
 })
