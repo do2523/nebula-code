@@ -4,7 +4,7 @@ import { api } from "note/trpc/server";
 import { getServerAuthSession } from "./auth";
 import { Category } from "note/app/_components/BudgetingCategorySelector";
 
-export default async function submitBudgetPreferences(e: FormData,categories: Category[]) : Promise<void | undefined> {
+export default async function submitBudgetPreferences(e: FormData,categories: Category[])  {
 	const session = await getServerAuthSession();
 	if(!session) return;
 

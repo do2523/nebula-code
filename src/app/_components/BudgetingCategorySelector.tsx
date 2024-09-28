@@ -16,7 +16,7 @@ export enum ExpenseType {
 	leisure,
 }
 export type Category = {
-	id: number,
+	id: string,
 	name: string,
 	type: ExpenseType
 	value: number,
@@ -24,31 +24,31 @@ export type Category = {
 
 const DefaultCategories: Category[] = [
 	{
-		id:1,
+		id:"1",
 		name: "Rent",
 		type: ExpenseType.fixed,
 		value: 0,
 	},
 	{
-		id: 2,
+		id: "2",
 		name: "Groceries",
 		type: ExpenseType.obligatoryRange,
 		value: 0,
 	},
 	{
-		id: 3,
+		id: "3",
 		name: "Savings Account",
 		type: ExpenseType.savings,
 		value: 0,
 	},
 	{
-		id: 4,
+		id: "4",
 		name: "Dinning out",
 		type: ExpenseType.leisure,
 		value: 0,
 	},
 	{
-		id:5,
+		id:"5",
 		name:"Debt Repayment",
 		type: ExpenseType.obligatoryRange,
 		value: 0,
@@ -68,7 +68,7 @@ export default function BudgetCategorySelector({userId}: BudgetCategorySelectorP
 	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
 		
 		const newCategory: Category = {
-				id:10,
+				id:"10",
 				name:categoryName,
 				type: categoryType,
 				value: 0,
@@ -91,7 +91,7 @@ export default function BudgetCategorySelector({userId}: BudgetCategorySelectorP
 				<Input name="debt" placeholder="Debt"></Input>
 			</li>
 			{categories.map(category => {
-				return <CategoryInput category={category}></CategoryInput>
+				return <CategoryInput category={category} key={category.id}></CategoryInput>
 			})}
 			<CreateCategory  onClickParent={addCategory}></CreateCategory>
 			<Button className="bg-blue-600"  type="submit">Submit</Button>

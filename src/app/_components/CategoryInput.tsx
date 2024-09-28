@@ -7,10 +7,14 @@ import { useState } from "react"
 
 interface CategoryInputProps {
 	category: Category,
+	key: string,
 }
-export default function CategoryInput({category} : CategoryInputProps){
+export default function CategoryInput({category,key} : CategoryInputProps){
 	const [categoryValue,setCategoryValue] = useState(0);
 
+	//const handleChangeCategoryValue = () => {
+
+	//}
 	const renderInputType= (category: Category) => {
 		const inputSlider = (<Slider className="w-24 accent-blue-500"></Slider>)
 		switch(category.type){
