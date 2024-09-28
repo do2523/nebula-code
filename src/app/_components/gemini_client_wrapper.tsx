@@ -11,7 +11,7 @@ export default function ClientWrapper() {
   };
 
   return (
-    <div>
+    <div className=''>
       <InputBox onSubmit={handleValueSubmit} />
       <Gemini topic={submittedValue} />
     </div>

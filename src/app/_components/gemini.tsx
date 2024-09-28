@@ -63,10 +63,17 @@ export default function Gemini({ topic }: GeminiProps) {
     }, [topic]); // Re-run the effect if the `topic` prop changes
 
     return (
-        <div className='bg-black'>
-        <div className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-teal-400 to-blue-300 my-4 p-4 md:p-6 leading-relaxed rounded-lg shadow-lg">
-        {error ? <span>{error}</span> : <span>{result}</span>}
+        // <div className="p-5">
+        //     <div className="text-lg md:text-xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-teal-400 to-blue-300 my-4 p-4 md:p-6 leading-[3] rounded-lg shadow-lg">
+        //         {error ? <span>{error}</span> : <span>{result}</span>}
+        //     </div>
+        // </div>
+
+        <div className="p-5">
+            <div className="text-lg md:text-xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-teal-400 to-blue-300 my-4 p-4 md:p-6 leading-relaxed rounded-lg shadow-lg" style={{ lineHeight: '2.25rem' }}>
+                {error ? <span>{error}</span> : <span>{result}</span>}
+            </div>
         </div>
-        </div>
+
     );
 }
