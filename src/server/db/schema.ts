@@ -45,19 +45,18 @@ export const posts = createTable(
 export const financialData = createTable("financialData", {
   userId: varchar("user_id", { length: 255 })
       .notNull()
-      .primaryKey()
       .references(() => users.id),
-  salary: bigint("salary", { mode: 'number' }),
-  balance: bigint("balance", { mode: 'number' }),
-  budget: bigint("budget", { mode: 'number' }),
-  debt: bigint("debt", { mode: 'number' }),
+  salary: bigint("salary", { mode: 'number' }).notNull().$default(() => 0),
+  balance: bigint("balance", { mode: 'number' }).notNull().$default(() => 0),
+  budget: bigint("budget", { mode: 'number' }).notNull().$default(() => 0),
+  debt: bigint("debt", { mode: 'number' }).notNull().$default(() => 0),
 },
 (data) => ({
   userIdIdx: index("financialData_user_id_idx").on(data.userId),
 }));
 
 export const financialDataRelations = relations(financialData, ({ one }) => ({
-  user: one(users),
+  user: one(users, { fields: [financialData.userId], references: [users.id] }),
 }))
 
 export const users = createTable("user", {
@@ -76,7 +75,7 @@ export const users = createTable("user", {
 
 export const usersRelations = relations(users, ({ many, one }) => ({
   accounts: many(accounts),
-  financialData: one(financialData),
+  financialData: one(financialData, { fields: [users.id], references: [financialData.userId] }),
   userSpendingCategory: many(userSpendingCategories),
 }));
 
@@ -164,3 +163,6 @@ export const userSpendingCategories = createTable(
 	}
 )
 
+export const userSpendingCategoriesRelations = relations(userSpendingCategories, ({ many, one }) => ({
+  user: one(users, { fields: [userSpendingCategories.userId], references: [users.id] }),
+}));

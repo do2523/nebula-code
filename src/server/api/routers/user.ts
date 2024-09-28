@@ -4,18 +4,12 @@ import {Category} from "src/app/_components/BudgetingCategorySelector";
 
 export const userRouter = createTRPCRouter({
     getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-        const user = await ctx.db.query.users.findFirst({
+        return await ctx.db.query.users.findFirst({
             where: (user, { eq }) => eq(user?.id, input),
             with: {
                 financialData: true
             },
         })
-
-        if(user == undefined) {
-            return null;
-        }
-
-        return user;
     }),
 	getCategoriesOfUser: publicProcedure.input(z.string()).query(async ({ctx,input}) => {
 		const categories = await ctx.db.query.userSpendingCategories.findFirst({
