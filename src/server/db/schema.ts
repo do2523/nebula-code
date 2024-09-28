@@ -44,8 +44,11 @@ export const posts = createTable(
 export const financialData = createTable("financialData", {
   userId: varchar("user_id", { length: 255 })
       .notNull()
+      .primaryKey()
       .references(() => users.id),
   salary: bigint("salary", { mode: 'number' }),
+  balance: bigint("balance", { mode: 'number' }),
+  budget: bigint("budget", { mode: 'number' }),
   debt: bigint("debt", { mode: 'number' }),
 },
 (data) => ({
@@ -53,7 +56,7 @@ export const financialData = createTable("financialData", {
 }));
 
 export const financialDataRelations = relations(financialData, ({ one }) => ({
-  users: one(financialData),
+  user: one(users),
 }))
 
 export const users = createTable("user", {
@@ -70,7 +73,7 @@ export const users = createTable("user", {
   image: varchar("image", { length: 255 }),
 });
 
-export const usersRelations = relations(users, ({ one, many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
   accounts: many(accounts),
   financialData: one(financialData),
 }));

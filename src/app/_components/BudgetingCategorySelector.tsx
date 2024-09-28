@@ -1,7 +1,8 @@
 import { name } from "drizzle-orm";
-import {Input} from "src/n/components/ui/input";
-import { Label } from "src/n/components/ui/label";
-import { Slider } from "src/n/components/ui/slider";
+import { Input } from "note/src/n/components/ui/input";
+import { Label } from "note/src/n/components/ui/label";
+import { Slider } from "note/src/n/components/ui/slider";
+
 import { Button } from "src/n/components/ui/button";
 
 import { useState } from "react";
