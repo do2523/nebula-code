@@ -5,8 +5,8 @@ import BudgetingCategorySelector, { Category } from "./../_components/BudgetingC
 import submitBudgetPreferences from "src/server/submitBudget";
 
 export default async function Budgeting(){
-	const handleSubmit = (e: FormData,categories: Category[]) => {
-		submitBudgetPreferences(e,categories);
+	const handleSubmit = async (e: FormData,categories: Category[]) => {
+		await submitBudgetPreferences(e,categories);
    }
 	const session = await getServerAuthSession();
 	return (
