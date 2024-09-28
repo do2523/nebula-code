@@ -62,7 +62,7 @@ export default function BudgetCategorySelector({userId}: BudgetCategorySelectorP
 	const newCategories: Category[] = []
 	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
 	
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: FormData) => {
 		submitBudgetPreferences(e,categories);
 	}
 	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
