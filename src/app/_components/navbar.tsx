@@ -8,8 +8,7 @@ export default async function Navbar(){
     <>
     <nav className="bg-black w-full flex justify-between items-center px-8 py-4 fixed top-0 left-0 right-0 shadow-lg z-50">
       <Link href={session ? '/dashboard' : '/'}>
-      <div className="text-2xl font-bold bg-clip-text text-transparent" style={
-        { backgroundImage: 'linear-gradient(90deg, #72D583 0%, #45924E 100%)', fontFamily: 'Inter' }}>
+      <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-700" >
         Nebula Finance
       </div>
 
