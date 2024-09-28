@@ -1,15 +1,19 @@
 
 import { getServerAuthSession } from "note/server/auth";
 import Navbar from "../_components/navbar";
-import BudgetingCategorySelector from "./../_components/BudgetingCategorySelector";
+import BudgetingCategorySelector, { Category } from "./../_components/BudgetingCategorySelector";
+import submitBudgetPreferences from "src/server/submitBudget";
 
 export default async function Budgeting(){
+	const handleSubmit = (e: FormData,categories: Category[]) => {
+		submitBudgetPreferences(e,categories);
+   }
 	const session = await getServerAuthSession();
 	return (
 		<div>
 			<Navbar />
 			<div className="h-min mt-8 pt-20 ml-8 mr-8">
-				<BudgetingCategorySelector userId={session?.user.id}></BudgetingCategorySelector>
+				<BudgetingCategorySelector userId={session?.user.id} onSubmit={handleSubmit}></BudgetingCategorySelector>
 			</div>
 		</div>
 	)

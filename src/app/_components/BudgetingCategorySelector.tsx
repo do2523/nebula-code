@@ -4,7 +4,7 @@ import CategoryInput from "./CategoryInput"
 import { Button } from "src/n/components/ui/button";
 
 import { useState } from "react";
-import submitBudgetPreferences from "src/server/submitBudget";
+
 import CreateCategory from "./createCategory";
 
 
@@ -57,18 +57,14 @@ const DefaultCategories: Category[] = [
 ]
 interface BudgetCategorySelectorProps {
 	userId: string | undefined,
+	onSubmit: (e: FormData,categories: Category[]) => void,
 }
-export default function BudgetCategorySelector({userId}: BudgetCategorySelectorProps){
+export default function BudgetCategorySelector({userId,onSubmit}: BudgetCategorySelectorProps){
 	const newCategories: Category[] = []
 	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
 	
 	const handleSubmit = (e: FormData) => {
-		 try{
-			submitBudgetPreferences(e,categories)
-		 }
-		 catch(error) {
-			console.log(error);
-		 }
+		 onSubmit(e,categories);
 	}
 	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
 		
