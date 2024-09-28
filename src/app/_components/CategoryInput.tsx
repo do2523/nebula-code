@@ -28,9 +28,9 @@ export default function CategoryInput({category,key} : CategoryInputProps){
 				return inputSlider;
 		}
 	}
-	const handleChangeCategoryValue = () => {
+	//const handleChangeCategoryValue = () => {
 
-	}
+	//}
 	return (
 		<li key={category.id + 2} className="flex flex-grow space-x-6" onChange={handleChangeCategoryValue}>
 				<Label className="text-white-600">{category.name}</Label>
