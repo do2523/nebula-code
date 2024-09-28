@@ -8,7 +8,7 @@ export default function Dashboard() {
   return (
     <div>
       <Navbar />
-      <div className="h-min mt-8 pt-20 ml-8 mr-8">
+      <div className="h-min mt-4 pt-20 ml-8 mr-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {/* Overall Spending */}
           <div className="col-span-1 md:col-span-2">

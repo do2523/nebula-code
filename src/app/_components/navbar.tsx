@@ -2,21 +2,24 @@ import React from 'react';
 import Link from 'next/link';
 import { getServerAuthSession } from "note/server/auth";
 
-
-
-
-
 export default async function Navbar(){
   const session = await getServerAuthSession();
   return (
     <>
-    <nav className="w-full bg-gray-900 flex justify-between items-center px-8 py-4 fixed top-0 left-0 right-0 shadow-lg z-50">
+    <nav className="bg-black w-full flex justify-between items-center px-8 py-4 fixed top-0 left-0 right-0 shadow-lg z-50">
       <Link href={session ? '/dashboard' : '/'}>
-      <div className="text-2xl font-bold text-green-300">Nebula Finance</div>
+      <div className="text-2xl font-bold bg-clip-text text-transparent" style={
+        { backgroundImage: 'linear-gradient(90deg, #72D583 0%, #45924E 100%)', fontFamily: 'Inter' }}>
+        Nebula Finance
+      </div>
+
       </Link>
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-2">
+        <Link href="/dashboard">
+          <h1 className="hover:bg-gray-800 hover:font-bold text-white font-bold px-4 py-2 rounded transition duration-300">Dashboard</h1>
+        </Link>
         <Link href="/gemini">
-          <h1 className="bg-gray-700 hover:bg-gray-800 text-white font-bold px-4 py-2 rounded transition duration-300">AI Finance</h1>
+          <h1 className="hover:bg-gray-800 text-white font-bold px-4 py-2 rounded transition duration-300">AIFinance</h1>
         </Link>
         <Link
           href={session ? '/api/auth/signout' : '/api/auth/signin'}
