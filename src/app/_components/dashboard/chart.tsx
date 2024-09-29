@@ -55,19 +55,19 @@ export default function Chart({categories,financialData}: ChartProps) {
 		return null;
 	const adjustedChartData = calculateBudget(chartData,'default',financialData[0]);
 	const bars = chartData.map(bar => {
-		let color:string= "#000000";
+		let color:string= "#f5ee27";
 		switch(bar.type){
 			case 'fixed':
-				color = "#ffffff";
+				color = "#4600d4";
 				break
 			case 'obligatory':
-				color =  "#27ff00";
+				color =  "#24e6ed";
 				break
 			case 'savings':
-				color = "#ffff00";
+				color = "#22f229";
 				break
 			case 'leisure':
-				color = "#ff0000"
+				color = "#7cf222";
 				break;
 		}
 		return <Cell fill={color}>
@@ -104,10 +104,10 @@ export default function Chart({categories,financialData}: ChartProps) {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Trending up this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total spending by category
         </div>
       </CardFooter>
     </Card>
