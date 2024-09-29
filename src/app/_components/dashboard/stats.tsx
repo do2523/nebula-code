@@ -2,9 +2,11 @@ import { getServerAuthSession } from 'note/server/auth';
 import { api } from 'note/trpc/server';
 import React from 'react';
 
-export default async function Stats() {
-  const session = await getServerAuthSession();
-  const userId = session?.user.id;
+interface StatsProp {
+	userId: string,
+	
+}
+export default async function Stats({userId}: StatsProp) {
 
   if(!userId) {
     return;

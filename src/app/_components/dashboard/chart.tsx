@@ -1,8 +1,8 @@
 "use client"
-
+import { financialData } from "note/server/db/schema"
 import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
+import { Bar, BarChart, CartesianGrid, Cell, XAxis } from "recharts"
+import { Category } from "../budgeting/BudgetingCategorySelector"
 import {
   Card,
   CardContent,
@@ -17,42 +17,74 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "note/n/components/chart"
-
+import calculateBudget from "./calculateBudget"
 export const description = "A multiple bar chart"
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
+
 
 const chartConfig = {
-  desktop: {
+  'fixed': {
     label: "Desktop",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
+  'obligatory': {
     label: "Mobile",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
 
-export default function Chart() {
+interface ChartProps {
+	categories: Category[],
+	financialData: number[],
+}
+export type chartBar = {
+	name: string,
+	type: string,
+	value: number,
+}
+export default function Chart({categories,financialData}: ChartProps) {
+	const chartData = categories.map(category => {
+		const element: chartBar = {
+			name: category.name,
+			type: category.categoryType,
+			value: category.value
+		};
+		return element;
+	})
+	if(financialData[0] == undefined)
+		return null;
+	const adjustedChartData = calculateBudget(chartData,'default',financialData[0]);
+	const bars = chartData.map(bar => {
+		let color:string= "#000000";
+		switch(bar.type){
+			case 'fixed':
+				color = "#ffffff";
+				break
+			case 'obligatory':
+				color =  "#27ff00";
+				break
+			case 'savings':
+				color = "#ffff00";
+				break
+			case 'leisure':
+				color = "#ff0000"
+				break;
+		}
+		return <Cell fill={color}>
+		</Cell>
+	});
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Overall Spending</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Spending By Category</CardTitle>
+        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={adjustedChartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="name"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
@@ -62,8 +94,11 @@ export default function Chart() {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+			<Bar dataKey="value">
+				{
+					bars
+				}
+			</Bar>
           </BarChart>
         </ChartContainer>
       </CardContent>

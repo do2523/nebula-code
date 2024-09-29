@@ -22,7 +22,7 @@ export const CategoryZod = z.object({
 			categoryType: category.categoryType,
 			value: category.value,
 		};
-		return newCategoryZod
+		return newCategoryZod;
 	})
 }
 type CategoryZod = z.infer<typeof CategoryZod>;
@@ -51,7 +51,17 @@ export const userRouter = createTRPCRouter({
 			return category_type;
 		})
 	}),
+	getFinancialData: protectedProcedure.input(z.string()).query(async ({ctx,input}) => {
+		
+		const financialData = await ctx.db.query.financialData.findFirst({
+			where: (data,{eq}) => eq(data.userId,input),
+		});
+		if(financialData == undefined){
+			return [];
+		}
+		return [financialData.salary,financialData.debt];
 
+	}),
     updateSalary: protectedProcedure.input(z.object({userId: z.string(), salary: z.number()})).mutation(async ({ctx, input}) => {
         await ctx.db.update(financialData).set({ salary: input.salary }).where(eq(financialData.userId, input.userId));
     }),
@@ -68,7 +78,7 @@ export const userRouter = createTRPCRouter({
 			const categoryExists = await ctx.db.query.userSpendingCategories.findFirst({
 				where: (spendingCategory,{eq}) => eq(spendingCategory.id,category?.id),
 			});
-			console.log(categoryExists);
+			//console.log(categoryExists);
 			if(!categoryExists){
 				await ctx.db.insert(userSpendingCategories).values({
 					id: category.id,
@@ -79,6 +89,7 @@ export const userRouter = createTRPCRouter({
 				});
 			}
 			else{
+				console.log("updating");
 				await ctx.db.update(userSpendingCategories).set({value: category.value}).where(eq(userSpendingCategories.id,category.id));
 			}
 		}
