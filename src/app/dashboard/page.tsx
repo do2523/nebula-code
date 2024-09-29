@@ -5,15 +5,14 @@ import Transactions from '../_components/dashboard/transactions';
 import Stats from '../_components/dashboard/stats';
 import { api } from "note/trpc/server";
 import { getServerAuthSession } from 'note/server/auth';
-import { api } from 'note/trpc/server';
 import { redirect } from 'next/navigation';
 
 export default function Dashboard() {
   return (
     <div>
       <Navbar />
-      <div className="h-min mt-4 pt-20 ml-8 mr-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="h-min mt-4 pt-1 ml-8 mr-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-14">
           {/* Overall Spending */}
           <div className="col-span-1 md:col-span-2">
             <Spending />

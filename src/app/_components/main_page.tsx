@@ -16,7 +16,7 @@ export default async function Homepage() {
                 <img
                     src="/nebula-image.png"  
                     alt="Nebula"
-                    className="w-auto h-auto max-w-none max-h-full opacity-20"
+                    className="w-auto h-auto max-w-none max-h-full opacity-40"
                     style={{ objectFit: 'contain' }}
                 />
             </div>
