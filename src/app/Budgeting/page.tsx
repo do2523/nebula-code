@@ -6,10 +6,12 @@ import { api } from "note/trpc/server";
 
 export default async function Budgeting(){
 	const session = await getServerAuthSession();
+
 	if(!session){
 		return (<p>Internal Error</p>)
 	}
-	const categories: Category[] = await api.user.getCategoriesOfUser(session?.user.id);
+	const categories = await api.user.getCategoriesOfUser(session?.user.id);
+	
 	return (
 		<div>
 			<Navbar />

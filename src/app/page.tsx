@@ -10,7 +10,6 @@ import Dashboard from "./dashboard/page";
 export default async function Home() {
   const session = await getServerAuthSession();
 
-  void api.post.getLatest.prefetch();
   if(session && !(await api.user.getById(session.user.id))?.financialData) {
     api.financialData.createForUser({ userId: session.user.id });
   }
