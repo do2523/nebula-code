@@ -20,13 +20,6 @@ export default function Gemini({ topic }: GeminiProps) {
     const [result, setResult] = useState<string>(initialMessage);
     const [error, setError] = useState<string | null>(null);
 
-    const utils = api.useUtils();
-    const createPost = api.post.create.useMutation({
-        onSuccess: async () => {
-            await utils.post.getAllByChatId.invalidate();
-        },
-    });
-
     useEffect(() => {
         const API_KEY = "AIzaSyAfu-DOkl22wXJCrIn8ClfpJiWmWhqEba8";
 
