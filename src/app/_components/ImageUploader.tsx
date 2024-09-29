@@ -44,20 +44,21 @@ export default function ImageUploader(){
     };
   
     return (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 mt-40">
         <h1 className="text-2xl font-bold mb-4">Image Description</h1>
         <button
           onClick={fetchDescription}
           disabled={loading}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          className="px-4 py-2 bg-green-700 text-white font-semibold rounded hover:bg-blue-700"
         >
           {loading ? 'Loading...' : 'Get Image Description'}
         </button>
+
         {error && <p className="mt-4 text-red-500">{error}</p>}
         
-          <div className="mt-4 p-4 bg-gray-100 rounded">
-            <h2 className="text-lg font-semibold">Description:</h2>
-            <p className='text-black'>{description}</p>
+          <div className="mt-10 p-8 bg-[#171D18] rounded-md">
+            <h2 className="text-lg font-normal mb-8">Description:</h2>
+            <p className='text-gray-200 text-lg ck leading-relaxed'>{description}</p>
           </div>
         
       </div>
