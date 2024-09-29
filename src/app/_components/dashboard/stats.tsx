@@ -4,6 +4,7 @@ import React from 'react';
 
 interface StatsProp {
 	userId: string,
+	
 }
 export default async function Stats({userId}: StatsProp) {
 

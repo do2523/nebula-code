@@ -8,14 +8,19 @@ import { redirect } from 'next/navigation';
 import { DefaultCategories } from '../_components/dashboard/defaultCategories';
 import { Category } from '../_components/budgeting/BudgetingCategorySelector';
 import { api } from 'note/trpc/server';
+import { financialData } from 'note/server/db/schema';
+
+
 
 export default async function Dashboard() {
 	const session = await getServerAuthSession();
-
+	
 	if(!session){
 		return null;
 	}
 	const categories = await api.user.getCategoriesOfUser(session?.user.id);
+	console.log(categories);
+	const financialData:number[] = await api.user.getFinancialData(session.user.id);
 	if(categories.length == 0){
 		const defaultCategories: Category[] = DefaultCategories.map(defCategory => {
 			const newDefCat:Category = {
@@ -29,6 +34,9 @@ export default async function Dashboard() {
 		});
 		await api.user.updateCategories(defaultCategories); 
 	}
+	if(financialData == undefined){
+		return null;
+	}
 	
   return (
     <div>
@@ -37,7 +45,7 @@ export default async function Dashboard() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-14">
           {/* Overall Spending */}
           <div className="col-span-1 md:col-span-2">
-            <Spending userCategories={categories} />
+            <Spending userCategories={categories} financeData={financialData} />
           </div>
 
           {/* Stats (4 mini cards) */}

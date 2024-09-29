@@ -10,6 +10,7 @@ export default async function Budgeting(){
 	if(!session){
 		return (<p>Internal Error</p>)
 	}
+
 	const categories = await api.user.getCategoriesOfUser(session?.user.id);
 	
 	return (

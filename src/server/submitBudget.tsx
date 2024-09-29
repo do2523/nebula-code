@@ -8,7 +8,7 @@ import { convertToZodCategories } from "./api/routers/user";
 export default async function submitBudgetPreferences(e: FormData,categories: Category[])  {
 
 	
-	//api.user.updateCategories(convertToZodCategories(categories));
+	api.user.updateCategories(convertToZodCategories(categories));
 	const session = await getServerAuthSession();
 	if(!session) return;
 

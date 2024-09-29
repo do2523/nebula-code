@@ -6,7 +6,7 @@ import { useState } from "react";
 import CreateCategory from "./createCategory";
 import submitBudgetPreferences from "note/server/submitBudget";
 import { api } from "note/trpc/server";
-import { convertToZodCategories, CategoryZod } from "src/server/api/routers/user"
+import { CategoryZod } from "src/server/api/routers/user"
 import { z } from "zod"
 
 
@@ -25,7 +25,8 @@ export default function BudgetCategorySelector({ userId, userCategories }: Budge
 		submitBudgetPreferences(e, categories);
 	}
 	const addCategory = (categoryName: string, categoryType: string) => {
-
+		if(categories.find(e => e.name == categoryName))
+			return;
 		const newCategory: Category = {
 
 			id: crypto.randomUUID(),
@@ -64,7 +65,7 @@ export default function BudgetCategorySelector({ userId, userCategories }: Budge
 				method="post" 
 				action={handleSubmit} 
 				className="
-				bg-black flex flex-col items-center justify-center w-full bg-black rounded-lg shadow-lg mb-10
+				flex flex-col items-center justify-center w-full bg-black rounded-lg shadow-lg mb-10
 				">
 			<ul className="list-none mb-6">
 				<li key={1}>
