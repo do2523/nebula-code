@@ -35,7 +35,7 @@ export default function CategoryInput({category,handleValueChange} : CategoryInp
 	}
 	return (
 		<li key={category.id + 2} className="flex flex-grow space-x-6">
-				<Label className="text-white-600">{category.name}</Label>
+				<Label className="text-white-600 text-lg">{category.name}</Label>
 					{renderInputType(category)}
 				</li>
 	)
