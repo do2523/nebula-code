@@ -2,9 +2,12 @@
 
 import { api } from "note/trpc/server";
 import { getServerAuthSession } from "./auth";
-import { Category } from "note/app/_components/BudgetingCategorySelector";
+import { Category } from "note/app/_components/budgeting/BudgetingCategorySelector";
+import { convertToZodCategories } from "./api/routers/user";
 
 export default async function submitBudgetPreferences(e: FormData,categories: Category[])  {
+
+	api.user.updateCategories(convertToZodCategories(categories));
 	const session = await getServerAuthSession();
 	if(!session) return;
 
@@ -16,7 +19,7 @@ export default async function submitBudgetPreferences(e: FormData,categories: Ca
 	const financialData = {
 		monthlySalary: parseInt(formData.monthlySalary.value),
 		debt: parseInt(formData.debt.value),
-	} 
+	}; 
 
 	const user = await api.user.getById(session?.user.id);
 	if(!user?.financialData) {

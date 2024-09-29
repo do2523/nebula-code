@@ -36,19 +36,19 @@ export const userRouter = createTRPCRouter({
         })
     }),
 	getCategoriesOfUser: publicProcedure.input(z.string()).query(async ({ctx,input}) => {
+		
 		const categories = await ctx.db.query.userSpendingCategories.findMany({
             where: (category, { eq }) => eq(category?.userId, input),
         });
-
 		return categories.map(category => {
-			const categoryType: Category = {
+			const category_type: Category = {
 				id:category.id,
-				name: category.userId,
+				name: category.categoryName,
 				categoryType: category.categoryType,
 				value: category.value,
 				userId: category.userId,
 			};
-			return categoryType;
+			return category_type;
 		})
 	}),
 
@@ -64,9 +64,11 @@ export const userRouter = createTRPCRouter({
 		const categories = input;
 
 		for(const category of categories){
+			console.log(category);
 			const categoryExists = await ctx.db.query.userSpendingCategories.findFirst({
 				where: (spendingCategory,{eq}) => eq(spendingCategory.id,category?.id),
 			});
+			console.log(categoryExists);
 			if(!categoryExists){
 				await ctx.db.insert(userSpendingCategories).values({
 					id: category.id,
@@ -81,9 +83,4 @@ export const userRouter = createTRPCRouter({
 			}
 		}
 	}),
-	getUserCategories: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-        return await ctx.db.query.userSpendingCategories.findMany({
-            where: (user, { eq }) => eq(user?.id, input)
-        })
-    }),
 })

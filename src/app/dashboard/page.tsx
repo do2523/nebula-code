@@ -3,11 +3,32 @@ import Navbar from '../_components/navbar';
 import Spending from '../_components/dashboard/spending';
 import Transactions from '../_components/dashboard/transactions';
 import Stats from '../_components/dashboard/stats';
-import { api } from "note/trpc/server";
 import { getServerAuthSession } from 'note/server/auth';
 import { redirect } from 'next/navigation';
+import { DefaultCategories } from '../_components/dashboard/defaultCategories';
+import { Category } from '../_components/budgeting/BudgetingCategorySelector';
 
-export default function Dashboard() {
+export default async function Dashboard() {
+	const session = await getServerAuthSession();
+
+	if(!session){
+		return null;
+	}
+	const categories = await api.user.getCategoriesOfUser(session?.user.id);
+	if(categories.length == 0){
+		const defaultCategories: Category[] = DefaultCategories.map(defCategory => {
+			const newDefCat:Category = {
+				id:crypto.randomUUID(),
+				userId: session.user.id,
+				name: defCategory.name,
+				categoryType: defCategory.categoryType,
+				value: 0,
+			}
+			return newDefCat; 
+		});
+		await api.user.updateCategories(defaultCategories); 
+	}
+	
   return (
     <div>
       <Navbar />
