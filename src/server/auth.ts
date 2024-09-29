@@ -15,6 +15,7 @@ import {
   users,
   verificationTokens,
 } from "note/server/db/schema";
+import { api } from "note/trpc/server";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -57,6 +58,7 @@ export const authOptions: NextAuthOptions = {
     accountsTable: accounts,
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
+
   }) as Adapter,
   providers: [
     DiscordProvider({
