@@ -19,8 +19,8 @@ export default function InputBox({ onSubmit }: InputBoxProps) {
 
   return (
     <>
-      <div className='flex justify-center items-center pt-30'>
-      <div className='flex justify-center items-center pt-40'>
+      <div className='flex justify-center items-center pt-10'>
+      <div className='flex justify-center items-center'>
         <input 
           className="w-[350px] px-4 py-3 bg-black text-white border-2 border-green-800 font-normal hover:bg-[#171D18] focus:outline-none focus:ring-green-400 focus:ring-opacity-75 h-12"
           value={inputValue}

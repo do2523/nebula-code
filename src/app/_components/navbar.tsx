@@ -14,6 +14,9 @@ export default async function Navbar(){
 
       </Link>
       <div className="flex items-center space-x-2">
+        <Link href="/contact">
+          <h1 className="hover:bg-gray-800 hover:font-bold text-white font-bold px-4 py-2 rounded transition duration-300">Contact</h1>
+        </Link>
         <Link href="/dashboard">
           <h1 className="hover:bg-gray-800 hover:font-bold text-white font-bold px-4 py-2 rounded transition duration-300">Dashboard</h1>
         </Link>

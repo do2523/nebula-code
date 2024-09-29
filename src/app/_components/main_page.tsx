@@ -8,7 +8,7 @@ export default async function Homepage() {
     return (
         <>
         
-        <div className="bg-black text-white min-h-screen flex flex-col items-center pt-40 relative">
+        <div className="bg-black text-white min-h-screen flex flex-col items-center pt-24 relative">
             {/* Nebula Background Image */}
             <div
                 className="absolute flex justify-center items-center pointer-events-none"
