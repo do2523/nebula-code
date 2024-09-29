@@ -8,7 +8,6 @@ import Navbar from "./_components/navbar";
 import Dashboard from "./dashboard/page";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await getServerAuthSession();
 
   void api.post.getLatest.prefetch();

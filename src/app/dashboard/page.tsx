@@ -3,7 +3,6 @@ import Navbar from '../_components/navbar';
 import Spending from '../_components/dashboard/spending';
 import Transactions from '../_components/dashboard/transactions';
 import Stats from '../_components/dashboard/stats';
-import { api } from "note/trpc/server";
 import { getServerAuthSession } from 'note/server/auth';
 import { api } from 'note/trpc/server';
 import { redirect } from 'next/navigation';
