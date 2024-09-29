@@ -56,8 +56,6 @@ export default function ContactForm() {
     } catch (error) {
       // Log errors and show error message
       setSubmissionStatus({ success: false, message: "Form Submitted!" });
-      event.currentTarget.reset(); // Reset the form fields
-
     }
   }
 
