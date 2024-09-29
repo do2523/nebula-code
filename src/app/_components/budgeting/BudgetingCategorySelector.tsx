@@ -22,10 +22,8 @@ interface BudgetCategorySelectorProps {
 	userId: string,
 	userCategories: Category[],
 }
-export default function BudgetCategorySelector({userId}: BudgetCategorySelectorProps,userCategories: Category[]){
-	
+export default function BudgetCategorySelector({userId,userCategories}: BudgetCategorySelectorProps){
 	const [categories,setCategories] = useState<Category[]>(userCategories);
-	
 	console.log(categories);
 	
 	const handleSubmit = (e: FormData) => {
@@ -61,7 +59,6 @@ export default function BudgetCategorySelector({userId}: BudgetCategorySelectorP
 				return category;
 			}
 		})
-		console.log(categories);
 		setCategories(newCategories);
 	}
 	

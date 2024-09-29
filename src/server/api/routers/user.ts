@@ -40,7 +40,6 @@ export const userRouter = createTRPCRouter({
 		const categories = await ctx.db.query.userSpendingCategories.findMany({
             where: (category, { eq }) => eq(category?.userId, input),
         });
-		return categories;
 		return categories.map(category => {
 			const category_type: Category = {
 				id:category.id,
@@ -65,9 +64,11 @@ export const userRouter = createTRPCRouter({
 		const categories = input;
 
 		for(const category of categories){
+			console.log(category);
 			const categoryExists = await ctx.db.query.userSpendingCategories.findFirst({
 				where: (spendingCategory,{eq}) => eq(spendingCategory.id,category?.id),
 			});
+			console.log(categoryExists);
 			if(!categoryExists){
 				await ctx.db.insert(userSpendingCategories).values({
 					id: category.id,

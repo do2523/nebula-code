@@ -11,7 +11,6 @@ export default async function Budgeting(){
 		return (<p>Internal Error</p>)
 	}
 	const categories = await api.user.getCategoriesOfUser(session?.user.id);
-	console.log(categories);
 	
 	return (
 		<div>
