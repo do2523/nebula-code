@@ -65,10 +65,10 @@ export default function AiImage() {
     return (
         <div>
 
-            <div>
-                <div style={{ display: 'flex' }}>
-                    <input type='file' onChange={(e) => handleImageChange(e)} />
-                    <button style={{ marginLeft: '20px' }} onClick={() => handleClick()}>Search</button>
+            <div className="text-center ml-50">
+                <div className="text-center ml-20 mt-10"style={{ display: 'flex' }}>
+                    <input className="text-white border 2 border-green-700" type='file' onChange={(e) => handleImageChange(e)} />
+                    <button className="text-white bg-green-700"style={{ marginLeft: '20px' }} onClick={() => handleClick()}>Get image description</button>
                 </div>
                 <img src={image} style={{ width: '30%', marginTop: 30 }} />
                 <div className="p-5">

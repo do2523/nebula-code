@@ -3,6 +3,7 @@ import ClientWrapper from "../_components/gemini_client_wrapper";
 import { getServerAuthSession } from "note/server/auth";
 import { api } from "note/trpc/server";
 import ImageUploader from "../_components/ImageUploader";
+import AiImage from "../_components/ai_image";
 
 export default async function Gemini() {
     const session = await getServerAuthSession();
@@ -25,7 +26,7 @@ export default async function Gemini() {
             <h1 className="font-semibold text-xl text-center text-green-600 mt-10 ">Chat with AI for financial advice</h1>
             <ClientWrapper prompt={userDataPrompt}/>
             <h1 className="font-semibold text-xl text-center text-green-600 mt-10">Image Analyzer with AI</h1>
-            <ImageUploader />
+            <AiImage />
         </div>
     )
 }
