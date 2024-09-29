@@ -1,4 +1,7 @@
-## Nebula Finance
+## Nebula Finance 🌌
+
+```npm install```
+```npm runn dev```
 
 ## Inspiration
 The Inspiration behind this project came to us after we noticed how many people struggle with their finances and we wanted to change this by simplifying how people manage their finances and to empower users to make better and more informed decisions with the help of a personalized and intuitive tool.
