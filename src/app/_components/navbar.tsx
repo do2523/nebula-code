@@ -20,6 +20,9 @@ export default async function Navbar(){
         <Link href="/gemini">
           <h1 className="hover:bg-gray-800 text-white font-bold px-4 py-2 rounded transition duration-300">AIFinance</h1>
         </Link>
+		<Link href="/Budgeting">
+			<h1 className="hover:bg-gray-800 text-white font-bold px-4 py-2 rounded transition duration-300">Budget Planner</h1>
+		</Link>
         <Link
           href={session ? '/api/auth/signout' : '/api/auth/signin'}
         >
@@ -27,6 +30,7 @@ export default async function Navbar(){
             {session ? 'Sign out' : 'Sign in'}
           </h1>
         </Link>
+		
       </div>
     </nav>
     </>
