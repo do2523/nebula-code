@@ -37,12 +37,12 @@ export default async function Dashboard() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-14">
           {/* Overall Spending */}
           <div className="col-span-1 md:col-span-2">
-            <Spending />
+            <Spending userCategories={categories} />
           </div>
 
           {/* Stats (4 mini cards) */}
           <div className="col-span-1">
-            <Stats />
+            <Stats userId={session.user.id}/>
           </div>
 
           {/* Transaction History */}
