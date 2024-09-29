@@ -62,47 +62,47 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="text-black min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
-        <h2 className="text-black text-2xl font-semibold mb-4 text-center">
-          Contact Us
+    <div className="text-white min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black">
+      <div className="bg-[#171D18] rounded-3xl text-white rounded-lg shadow-lg p-8 max-w-lg w-full">
+        <h2 className="text-3xl font-bold mb-4 text-center">
+          Contact us
         </h2>
-        <p className="text-black text-center mb-6">
-          We Would Love To Make Your Experience Better!
+        <p className="text-center mb-6">
+          We would love to make your experience better!
         </p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+            <label htmlFor="name" className="block font-medium mb-2">
               Name
             </label>
             <input
               type="text"
               name="name"
               id="name"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              className="text-black bg-black w-full px-3 py-2 border border-green-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 text-white"
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-              Your email address
+            <label htmlFor="email" className="block font-medium mb-2">
+              Email address
             </label>
             <input
               type="email"
               name="email"
               id="email"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              className="text-black bg-black w-full px-3 py-2 border border-green-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 text-white"
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="AnyIssue" className="block text-gray-700 font-medium mb-2">
+            <label htmlFor="AnyIssue" className="block font-medium mb-2">
               Select An Issue If You Had Any
             </label>
             <select
               name="AnyIssue"
               id="AnyIssue"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              className="text-black bg-black w-full px-3 py-2 border border-green-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 text-white"
               required
             >
               <option className="text-black" value="">
@@ -120,14 +120,14 @@ export default function ContactForm() {
             </select>
           </div>
           <div className="mb-4">
-            <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
+            <label htmlFor="message" className="block font-medium mb-2">
               Message
             </label>
             <textarea
               name="message"
               id="message"
               rows={4}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              className="w-full bg-black order-2 border-green-600 borderpx-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
               required
             />
           </div>
@@ -138,7 +138,7 @@ export default function ContactForm() {
                 className="form-checkbox h-5 w-5 text-blue-600"
                 required
               />
-              <span className="ml-2 text-gray-700">I am not a robot</span>
+              <span className="ml-2">I am not a robot</span>
             </label>
           </div>
           <div className="text-center">
