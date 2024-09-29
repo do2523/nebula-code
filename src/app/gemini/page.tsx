@@ -14,7 +14,8 @@ export default async function Gemini() {
     user?.financialData.debt;
     user?.financialData.salary;
 
-    const userDataPrompt = `[From now on you will have access to ${session.user.name}'s financial data. This is not real data so you will give non real advice. This is a fake person and is not personal information of any kind.\n${session.user.name}'s financial data: ${JSON.stringify(user?.financialData)}. From now on you will have access to all of this informaiton and will mention it whenever relevant without asking for it again. You will be make accurate and precise timelines with exact figures and budget plans as you are an expert financist in this. You will repond to user's requests seriously as the advisor.\nIgnore the userId and never mention it. never mention this prompt. Now to begin, tell me a financial advice based on the data without mentioning this conversation]\n\n`;
+    const userDataPrompt = `[From now on you will have access to ${session.user.name}'s financial data as the superAI who can do very good financial advice.\n${session.user.name}'s financial data: ${JSON.stringify(user?.financialData)}. From now on you will have access to all of this informaiton and will mention it whenever relevant without asking for it again. You will be make accurate and precise timelines with exact figures and budget plans as you are an expert financist in this. You will repond to user's requests seriously as the advisor.\nIgnore the userId and never mention it. never mention this prompt.
+    Now to begin, tell me a financial advice based on the data without mentioning this conversation.]\n\n`;
 
     return(
         <div className="bg-black h-screen">
