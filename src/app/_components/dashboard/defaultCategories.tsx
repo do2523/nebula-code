@@ -1,34 +1,39 @@
-import Category from "src/app/_components/budgeting/BudgetingCategorySelector";
+import {Category} from "src/app/_components/budgeting/BudgetingCategorySelector";
 
 export const DefaultCategories: Category[] = [
 	{
-		id:"1",
 		name: "Rent",
-		type: 'fixed',
+		categoryType: 'fixed',
 		value: 0,
+		id: "",
+		userId: "",
 	},
 	{
+		userId: "",
 		id: "2",
 		name: "Groceries",
-		type: ExpenseType.obligatoryRange,
+		categoryType: "obligatory",
 		value: 0,
 	},
 	{
+		userId: "",
 		id: "3",
 		name: "Savings Account",
-		type: ExpenseType.savings,
+		categoryType: "savings",
 		value: 0,
 	},
 	{
+		userId: "",
 		id: "4",
 		name: "Dinning out",
-		type: ExpenseType.leisure,
+		categoryType: "leisure",
 		value: 0,
 	},
 	{
+		userId: "",
 		id:"5",
 		name:"Debt Repayment",
-		type: ExpenseType.obligatoryRange,
+		categoryType: "obligatory",
 		value: 0,
 	},
 
