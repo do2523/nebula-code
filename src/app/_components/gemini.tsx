@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
 import Markdown from 'react-markdown'
+import { api } from 'note/trpc/react';
 
 // Define a custom type for the response if the library does not provide one
 type CustomGenerativeResponse = {
@@ -18,6 +19,13 @@ export default function Gemini({ topic }: GeminiProps) {
     const initialMessage = "Welcome to the Nebula Finance Chat Bot. Using the power of AI I can answer any of your financial related questions.";
     const [result, setResult] = useState<string>(initialMessage);
     const [error, setError] = useState<string | null>(null);
+
+    const utils = api.useUtils();
+    const createPost = api.post.create.useMutation({
+        onSuccess: async () => {
+            await utils.post.getAllByChatId.invalidate();
+        },
+    });
 
     useEffect(() => {
         const API_KEY = "AIzaSyAfu-DOkl22wXJCrIn8ClfpJiWmWhqEba8";
