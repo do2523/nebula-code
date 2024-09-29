@@ -51,7 +51,9 @@ export default function Chart({categories,financialData}: ChartProps) {
 		};
 		return element;
 	})
-	calculateBudget(chartData,'default',financialData[0])
+	if(financialData[0] == undefined)
+		return null;
+	const adjustedChartData = calculateBudget(chartData,'default',financialData[0]);
 	const bars = chartData.map(bar => {
 		let color:string= "#000000";
 		switch(bar.type){
@@ -79,7 +81,7 @@ export default function Chart({categories,financialData}: ChartProps) {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={adjustedChartData}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="name"

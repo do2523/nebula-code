@@ -19,7 +19,6 @@ export default async function Dashboard() {
 		return null;
 	}
 	const categories = await api.user.getCategoriesOfUser(session?.user.id);
-	console.log(categories);
 	const financialData:number[] = await api.user.getFinancialData(session.user.id);
 	if(categories.length == 0){
 		const defaultCategories: Category[] = DefaultCategories.map(defCategory => {

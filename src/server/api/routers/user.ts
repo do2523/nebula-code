@@ -78,7 +78,7 @@ export const userRouter = createTRPCRouter({
 			const categoryExists = await ctx.db.query.userSpendingCategories.findFirst({
 				where: (spendingCategory,{eq}) => eq(spendingCategory.id,category?.id),
 			});
-			console.log(categoryExists);
+			//console.log(categoryExists);
 			if(!categoryExists){
 				await ctx.db.insert(userSpendingCategories).values({
 					id: category.id,
@@ -89,6 +89,7 @@ export const userRouter = createTRPCRouter({
 				});
 			}
 			else{
+				console.log("updating");
 				await ctx.db.update(userSpendingCategories).set({value: category.value}).where(eq(userSpendingCategories.id,category.id));
 			}
 		}

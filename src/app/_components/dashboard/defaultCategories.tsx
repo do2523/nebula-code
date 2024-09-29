@@ -34,7 +34,7 @@ export const DefaultCategories: Category[] = [
 		id:"5",
 		name:"Debt Repayment",
 		categoryType: "obligatory",
-		value: 0,
+		value: 50,
 	},
 
 ]

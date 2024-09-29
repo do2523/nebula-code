@@ -29,6 +29,7 @@ export default async function submitBudgetPreferences(e: FormData,categories: Ca
 	if(!user?.financialData) {
 		await api.financialData.createForUser({ userId: session.user.id });
 	}
+	api.user.updateCategories(categories);
 	
 	await api.user.updateSalary({ userId: session.user.id, salary: financialData.monthlySalary });
 	await api.user.updateDebt({ userId: session.user.id, debt: financialData.debt });
