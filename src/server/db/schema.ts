@@ -158,8 +158,8 @@ export const userSpendingCategories = createTable(
 		id: varchar("id",{length:256}).notNull().$defaultFn(() => crypto.randomUUID()),
     userId: varchar("userId",{length: 255}).notNull().references(() => users.id),
 		categoryName: varchar("categoryName",{length:256}).notNull(),
-		categoryType: expenseType('expenseType'),
-		value: integer('value'),
+		categoryType: varchar("categoryType",{length:256}).notNull(),
+		value: integer('value').notNull().default(0),
 	}
 )
 

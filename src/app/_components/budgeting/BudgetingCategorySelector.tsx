@@ -2,79 +2,44 @@
 import { Input } from "src/n/components/ui/input";
 import CategoryInput from "./CategoryInput"
 import { Button } from "src/n/components/ui/button";
-
 import { useState } from "react";
-
 import CreateCategory from "./createCategory";
 import submitBudgetPreferences from "note/server/submitBudget";
-
-
+import { api } from "note/trpc/server";
+import {convertToZodCategories,CategoryZod} from "src/server/api/routers/user"
+import {z} from "zod"
 
 export enum ExpenseType {
-	fixed,
-	obligatoryRange,
-	savings,
-	leisure,
+	fixed = 'fixed',
+	obligatory = 'obligatory',
+	savings = 'savings',
+	leisure = 'leisure',
 }
-export type Category = {
-	id: string,
-	name: string,
-	type: ExpenseType
-	value: number,
-}
+export type Category = z.infer<typeof CategoryZod>
 
-const DefaultCategories: Category[] = [
-	{
-		id:"1",
-		name: "Rent",
-		type: ExpenseType.fixed,
-		value: 0,
-	},
-	{
-		id: "2",
-		name: "Groceries",
-		type: ExpenseType.obligatoryRange,
-		value: 0,
-	},
-	{
-		id: "3",
-		name: "Savings Account",
-		type: ExpenseType.savings,
-		value: 0,
-	},
-	{
-		id: "4",
-		name: "Dinning out",
-		type: ExpenseType.leisure,
-		value: 0,
-	},
-	{
-		id:"5",
-		name:"Debt Repayment",
-		type: ExpenseType.obligatoryRange,
-		value: 0,
-	},
 
-]
 interface BudgetCategorySelectorProps {
-	userId: string | undefined,
+	userId: string,
+	userCategories: Category[],
 }
-export default function BudgetCategorySelector({userId}: BudgetCategorySelectorProps){
-	const newCategories: Category[] = [];
-	const [categories,setCategories] = useState<Category[]>(DefaultCategories);
+export default function BudgetCategorySelector({userId}: BudgetCategorySelectorProps,userCategories: Category[]){
+	
+	const [categories,setCategories] = useState<Category[]>(userCategories);
+	
 	
 	const handleSubmit = (e: FormData) => {
-		 submitBudgetPreferences(e,categories);
+		 api.user.updateCategories(convertToZodCategories(categories));
 	}
 	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
 		
 		const newCategory: Category = {
-				id:"10",
+
+				id: crypto.randomUUID(),
+				userId: userId,
 				name:categoryName,
-				type: categoryType,
+				categoryType: categoryType,
 				value: 0,
 			};
-			newCategories.push(newCategory);
 		setCategories([
 			...categories,
 			newCategory,

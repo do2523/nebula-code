@@ -14,15 +14,16 @@ export default function CategoryInput({category,handleValueChange} : CategoryInp
 
 	const renderInputType= (category: Category) => {
 		const inputSlider = (<Slider className="w-24 accent-blue-500" max={100} min={0} onValueChange={handleChangeCategoryValue}></Slider>)
-		switch(category.type){
-			case ExpenseType.fixed:
+		switch(category.categoryType){
+			case 'fixed':
 				return <Input className="w-24"></Input>;
-			case ExpenseType.leisure:
+			case 'leisure':
 					return inputSlider;
-			case ExpenseType.obligatoryRange:
+			case 'obligatory':
 				return inputSlider;
-			case ExpenseType.savings:
+			case 'savings':
 				return inputSlider;
+			
 		}
 	}
 	const handleChangeCategoryValue = (number: number[]) => {
