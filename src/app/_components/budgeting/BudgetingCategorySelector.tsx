@@ -5,7 +5,7 @@ import { Button } from "src/n/components/ui/button";
 import { useState } from "react";
 import CreateCategory from "./createCategory";
 import submitBudgetPreferences from "note/server/submitBudget";
-import { api } from "note/trpc/server";
+import {api}  from "note/trpc/server";
 import {convertToZodCategories,CategoryZod} from "src/server/api/routers/user"
 import {z} from "zod"
 
@@ -26,11 +26,12 @@ export default function BudgetCategorySelector({userId}: BudgetCategorySelectorP
 	
 	const [categories,setCategories] = useState<Category[]>(userCategories);
 	
+	console.log(categories);
 	
 	const handleSubmit = (e: FormData) => {
-		 api.user.updateCategories(convertToZodCategories(categories));
+		 submitBudgetPreferences(e,categories);
 	}
-	const addCategory = (categoryName: string,categoryType:ExpenseType) => {
+	const addCategory = (categoryName: string,categoryType: string) => {
 		
 		const newCategory: Category = {
 
