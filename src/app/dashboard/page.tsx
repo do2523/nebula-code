@@ -7,6 +7,7 @@ import { getServerAuthSession } from 'note/server/auth';
 import { redirect } from 'next/navigation';
 import { DefaultCategories } from '../_components/dashboard/defaultCategories';
 import { Category } from '../_components/budgeting/BudgetingCategorySelector';
+import { api } from 'note/trpc/server';
 
 export default async function Dashboard() {
 	const session = await getServerAuthSession();
