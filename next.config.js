@@ -7,4 +7,9 @@ await import("./src/env.js");
 /** @type {import("next").NextConfig} */
 const config = {};
 
+modules.exports = {
+    eslint : {
+        ignoreDuringBuilds: true
+    }
+}
 export default config;

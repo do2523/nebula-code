@@ -60,6 +60,7 @@ export default function ContactForm() {
   }
 
   return (
+    
     <div className="text-white min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black">
       <div className="bg-[#171D18] rounded-3xl text-white rounded-lg shadow-lg p-8 max-w-lg w-full">
         <h2 className="text-3xl font-bold mb-4 text-center">
@@ -166,5 +167,6 @@ export default function ContactForm() {
         </button>
       </div>
     </div>
+    
   );
 }
