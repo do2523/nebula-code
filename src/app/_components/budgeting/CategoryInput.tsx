@@ -1,5 +1,5 @@
 
-import { Category,ExpenseType } from "./BudgetingCategorySelector"
+import { Category} from "./BudgetingCategorySelector"
 import { Label } from "note/n/components/ui/label"
 import { Slider } from "note/n/components/ui/slider"
 import { Input } from "note/n/components/ui/input"

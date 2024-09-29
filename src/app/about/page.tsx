@@ -1,26 +1,94 @@
+// ContactForm.tsx
+
 import React from 'react';
 
-export default function AboutPage() {
+export default function ContactForm() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black py-12">
-      <div className="max-w-3xl bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">About Us</h1>
-        <p className="text-lg text-gray-600 leading-relaxed">
-          Welcome to our personal finance platform! We are dedicated to empowering individuals to take control of their financial lives. Our goal is to provide you with the knowledge, tools, and resources to make informed decisions about your money, so you can achieve financial independence and peace of mind.
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
+        <h2 className="text-black text-2xl font-semibold mb-4 text-center">
+          Contact Us
+        </h2>
+        <p className="text-black text-center mb-6">
+         We Would Love To Make Your Experience Better!
         </p>
-        <p className="mt-4 text-lg text-gray-600 leading-relaxed">
-          Whether you're just starting to build your savings, looking to manage debt, or planning for the future, we're here to help. Our team of financial enthusiasts is passionate about simplifying complex financial concepts, making it easier for you to set and reach your financial goals.
+        <form>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+              Your email address
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="position" className="block text-gray-700 font-medium mb-2">
+              Select An Issue If You Had Any
+            </label>
+            <select
+              id="position"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              required
+            >
+              <option className='text-black' value="">Select</option>
+              <option className='text-black' value="position1">No Issues</option>
+              <option className='text-black' value="position2">AI</option>
+              <option className='text-black' value="position2">Dashboard</option>
+
+            </select>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
+              Message
+            </label>
+            <textarea
+              id="message"
+              rows={4}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-600"
+                required
+              />
+              <span className="ml-2 text-gray-700">I am not a robot</span>
+            </label>
+          </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className="mt-8 text-center">
+        <p className="text-white text-lg">
+          Nebula Finance
         </p>
-        <p className="mt-4 text-lg text-gray-600 leading-relaxed">
-          Join us in this journey to financial well-being. Explore our resources, learn at your own pace, and take actionable steps towards a secure financial future. If you have any questions or need personalized guidance, feel free to reach out to us. Together, we can make smart financial choices that lead to a brighter tomorrow.
-        </p>
-        <div className="flex justify-center mt-6">
-          <p
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
-          >
-            Contact Us
-          </p>
-        </div>
+        <button className="mt-4 bg-white text-green-500 px-6 py-2 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300">
+          ShellHacks
+        </button>
       </div>
     </div>
   );

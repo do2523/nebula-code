@@ -9,12 +9,7 @@ import { api } from "note/trpc/server";
 import { convertToZodCategories, CategoryZod } from "src/server/api/routers/user"
 import { z } from "zod"
 
-export enum ExpenseType {
-	fixed = 'fixed',
-	obligatory = 'obligatory',
-	savings = 'savings',
-	leisure = 'leisure',
-}
+
 export type Category = z.infer<typeof CategoryZod>
 
 
