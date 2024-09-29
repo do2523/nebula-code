@@ -23,6 +23,7 @@ export default async function Gemini() {
             <h1 className="font-bold text-center text-white text-3xl mt-20 pt-8">Welcome to AIFinance!</h1>
             <h1 className="font-semibold text-xl text-center text-green-600 mt-10 ">Chat with AI for financial advice</h1>
             <ClientWrapper prompt={userDataPrompt}/>
+            <h1 className="font-semibold text-xl text-center text-green-600 mt-10">Image Analyzer with AI</h1>
             <ImageUploader />
         </div>
     )
