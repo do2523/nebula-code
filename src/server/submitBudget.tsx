@@ -7,18 +7,22 @@ import { convertToZodCategories } from "./api/routers/user";
 
 export default async function submitBudgetPreferences(e: FormData,categories: Category[])  {
 
-	api.user.updateCategories(convertToZodCategories(categories));
+	
+	//api.user.updateCategories(convertToZodCategories(categories));
 	const session = await getServerAuthSession();
 	if(!session) return;
 
-	const formData = e as typeof e &{
-		monthlySalary: {value: string},
-		debt: {value: string},
+	const formData = {
+		monthlySalary: e.get('monthlySalary')?.toString(),
+		debt: e.get('debt')?.toString(),
 	};
-
+	if(formData.monthlySalary == undefined || formData.debt == undefined){
+		console.log('here');
+		return;
+	}
 	const financialData = {
-		monthlySalary: parseInt(formData.monthlySalary.value),
-		debt: parseInt(formData.debt.value),
+		monthlySalary: parseInt(formData.monthlySalary),
+		debt: parseInt(formData.debt),
 	}; 
 
 	const user = await api.user.getById(session?.user.id);
