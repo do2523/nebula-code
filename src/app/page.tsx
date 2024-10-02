@@ -1,29 +1,24 @@
-import Link from "next/link";
-
-import { LatestPost } from "note/app/_components/post";
 import { getServerAuthSession } from "note/server/auth";
-import { api, HydrateClient } from "note/trpc/server";
+import { api } from "note/trpc/server";
 import Homepage from "./_components/main_page";
-import Navbar from "./_components/navbar";
 import Dashboard from "./dashboard/page";
 
 export default async function Home() {
   const session = await getServerAuthSession();
 
-  if(session && !(await api.user.getById(session.user.id))?.financialData) {
-    api.financialData.createForUser({ userId: session.user.id });
+  if(session) {
+    const user = await api.user.getById(session.user.id);
+
+    // this should never happen
+    if(!user) return;
+
+    if(!user?.financialData) {
+      void api.financialData.createForUser({ userId: session.user.id });
+    }
+    
+    return <Dashboard/> 
   }
-
-    if (!session) {
-      return (
-        <>
-        <Homepage/>
-        </>
-      );
-    }
-    else
-    {
-      return <Dashboard/>
-    }
-
+  else {
+    return <Homepage/>; 
+  }
 }

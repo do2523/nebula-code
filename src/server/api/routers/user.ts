@@ -2,15 +2,15 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { financialData, userSpendingCategories } from "note/server/db/schema";
 import { eq } from "drizzle-orm";
-import {expenseType} from 'src/server/db/schema'
-import { Category } from "note/app/_components/budgeting/BudgetingCategorySelector";
-import { redirect } from 'next/navigation';
+import type { Category } from "note/app/_components/budgeting/BudgetingCategorySelector";
+import { api } from "note/trpc/server";
+import { DefaultCategories } from "note/app/_components/dashboard/defaultCategories";
 
 export const CategoryZod = z.object({
 	id: z.string(),
 	userId: z.string(),
 	name: z.string(),
-	categoryType: z.string(),
+	type: z.string(),
 	value: z.number(),
   });
   export const convertToZodCategories = (categories: Category[]): CategoryZod[] => {
@@ -19,7 +19,7 @@ export const CategoryZod = z.object({
 			id: category.id,
 			userId: category.userId,
 			name: category.name,
-			categoryType: category.categoryType,
+			type: category.type,
 			value: category.value,
 		};
 		return newCategoryZod;
@@ -35,32 +35,70 @@ export const userRouter = createTRPCRouter({
             },
         })
     }),
-	getCategoriesOfUser: publicProcedure.input(z.string()).query(async ({ctx,input}) => {
-		
-		const categories = await ctx.db.query.userSpendingCategories.findMany({
-            where: (category, { eq }) => eq(category?.userId, input),
+	getCategoriesOfUser: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		let categories = await ctx.db.query.userSpendingCategories.findMany({
+            where: (category, { eq }) => eq(category.userId, input),
         });
-		return categories.map(category => {
-			const category_type: Category = {
-				id:category.id,
-				name: category.categoryName,
-				categoryType: category.categoryType,
-				value: category.value,
-				userId: category.userId,
-			};
-			return category_type;
-		})
-	}),
-	getFinancialData: protectedProcedure.input(z.string()).query(async ({ctx,input}) => {
-		
-		const financialData = await ctx.db.query.financialData.findFirst({
-			where: (data,{eq}) => eq(data.userId,input),
-		});
-		if(financialData == undefined){
-			return [];
-		}
-		return [financialData.salary,financialData.debt];
 
+		// userSpendingCategories table doesn't exist in db
+		if(!categories) {
+			// create userSpendingCategories with default categories
+			const defaultCategories = DefaultCategories.map(defaultCategory => {
+				return {
+					id: crypto.randomUUID(),
+					userId: input,
+					name: defaultCategory.name,
+					type: defaultCategory.type,
+					value: 0,
+				} as Category;
+			})
+			
+			await api.user.updateCategories(defaultCategories); 
+
+			categories = await ctx.db.query.userSpendingCategories.findMany({
+				where: (category, { eq }) => eq(category.userId, input),
+			});
+
+			// userSpendingCategories table couldn't be created
+			if(!categories) {
+				throw new Error("userSpendingCategories table couldn't be created for the user");
+			}
+		}
+
+		const formattedCategories = categories.map(category => {
+			return {
+				id: category.id,
+				userId: category.userId,
+				name: category.categoryName,
+				type: category.categoryType,
+				value: 0,
+			} as Category;
+		});
+
+		return formattedCategories;
+	}),
+	// input should be a user's id
+	getFinancialData: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		let data = await ctx.db.query.financialData.findFirst({
+			where: (data, { eq }) => eq(data.userId, input),
+		});
+
+		// financialData table doesn't exist in db
+		if(!data) {
+			// try to create financialData table
+			void api.financialData.createForUser({ userId: input });
+
+			data = await ctx.db.query.financialData.findFirst({
+				where: (data, { eq }) => eq(data.userId, input),
+			});
+
+			// financialData table couldn't be created
+			if(!data) {
+				throw new Error("FinancialData table couldn't be created for the user");
+			}
+		}
+
+		return data;
 	}),
     updateSalary: protectedProcedure.input(z.object({userId: z.string(), salary: z.number()})).mutation(async ({ctx, input}) => {
         await ctx.db.update(financialData).set({ salary: input.salary }).where(eq(financialData.userId, input.userId));
@@ -84,7 +122,7 @@ export const userRouter = createTRPCRouter({
 					id: category.id,
 					userId: category.userId,
 					categoryName: category.name,
-					categoryType: category.categoryType,
+					categoryType: category.type,
 					value: category.value,
 				});
 			}

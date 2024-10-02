@@ -1,24 +1,22 @@
 import React from 'react';
-import Button from './button';
 import Link from 'next/link';
-import { getServerAuthSession } from "note/server/auth";
+import Image from 'next/image';
 
 export default async function Homepage() {
-    const session = await getServerAuthSession();
     return (
-        <>
-        
         <div className="bg-black text-white min-h-screen flex flex-col items-center pt-24 relative">
             {/* Nebula Background Image */}
             <div
-                className="absolute flex justify-center items-center pointer-events-none"
-            >
-                <img
-                    src="/nebula-image.png"  
-                    alt="Nebula"
-                    className="w-auto h-auto max-w-none max-h-full opacity-40"
-                    style={{ objectFit: 'contain' }}
-                />
+                className="absolute flex justify-center items-center pointer-events-none">
+                    <Image
+                        src="/nebula-image.png"  
+                        alt="Nebula"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{ width: '100%', height: 'auto' }}
+                        className="w-auto h-auto max-w-none max-h-full opacity-40 object-contain"
+                    />
             </div>
 
             {/* Text Content Overlaid */}
@@ -32,11 +30,9 @@ export default async function Homepage() {
                 </div>
             </div>
             <div className="mb-20">
-                <Link
-                    href={session ? '/api/auth/signout' : '/api/auth/signin'}
-                    >
+                <Link href='/api/auth/signin'>
                     <h1 className="bg-green-600 hover:bg-green-800 text-white font-bold px-4 py-2 rounded transition duration-300">
-                        {session ? 'Sign out' : 'Sign in'}
+                        Sign in
                     </h1>
                 </Link>
             </div>
@@ -47,8 +43,5 @@ export default async function Homepage() {
             </div>
 
         </div>
-
-        
-        </>
     );
 }

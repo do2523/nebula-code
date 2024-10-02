@@ -5,9 +5,8 @@ import { Button } from "src/n/components/ui/button";
 import { useState } from "react";
 import CreateCategory from "./createCategory";
 import submitBudgetPreferences from "note/server/submitBudget";
-import { api } from "note/trpc/server";
-import { CategoryZod } from "src/server/api/routers/user"
-import { z } from "zod"
+import type { CategoryZod } from "src/server/api/routers/user";
+import type { z } from "zod";
 
 
 export type Category = z.infer<typeof CategoryZod>
@@ -22,7 +21,7 @@ export default function BudgetCategorySelector({ userId, userCategories }: Budge
 	console.log(categories);
 
 	const handleSubmit = (e: FormData) => {
-		submitBudgetPreferences(e, categories);
+		void submitBudgetPreferences(e, categories);
 	}
 	const addCategory = (categoryName: string, categoryType: string) => {
 		if(categories.find(e => e.name == categoryName))
@@ -32,7 +31,7 @@ export default function BudgetCategorySelector({ userId, userCategories }: Budge
 			id: crypto.randomUUID(),
 			userId: userId,
 			name: categoryName,
-			categoryType: categoryType,
+			type: categoryType,
 			value: 0,
 		};
 		setCategories([
