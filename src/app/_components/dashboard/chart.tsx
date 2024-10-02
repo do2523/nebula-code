@@ -1,8 +1,7 @@
 "use client"
-import { financialData } from "note/server/db/schema"
 import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, Cell, XAxis } from "recharts"
-import { Category } from "../budgeting/BudgetingCategorySelector"
+import type { Category } from "../budgeting/BudgetingCategorySelector"
 import {
   Card,
   CardContent,
@@ -12,7 +11,7 @@ import {
   CardTitle,
 } from "note/n/components/card"
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -46,7 +45,7 @@ export default function Chart({categories,financialData}: ChartProps) {
 	const chartData = categories.map(category => {
 		const element: chartBar = {
 			name: category.name,
-			type: category.categoryType,
+			type: category.type,
 			value: category.value
 		};
 		return element;
@@ -55,7 +54,8 @@ export default function Chart({categories,financialData}: ChartProps) {
 		return null;
 	const adjustedChartData = calculateBudget(chartData,'default',financialData[0]);
 	const bars = chartData.map(bar => {
-		let color:string= "#f5ee27";
+		let color = "#f5ee27";
+
 		switch(bar.type){
 			case 'fixed':
 				color = "#4600d4";
@@ -70,8 +70,7 @@ export default function Chart({categories,financialData}: ChartProps) {
 				color = "#7cf222";
 				break;
 		}
-		return <Cell fill={color}>
-		</Cell>
+		return <Cell fill={color} key={color}> </Cell>
 	});
   return (
     <Card>
@@ -88,7 +87,7 @@ export default function Chart({categories,financialData}: ChartProps) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value: string) => value.slice(0, 3)}
             />
             <ChartTooltip
               cursor={false}

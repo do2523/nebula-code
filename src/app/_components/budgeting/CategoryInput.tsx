@@ -1,20 +1,18 @@
 
-import { Category} from "./BudgetingCategorySelector"
+import type { Category} from "./BudgetingCategorySelector"
 import { Label } from "note/n/components/ui/label"
 import { Slider } from "note/n/components/ui/slider"
 import { Input } from "note/n/components/ui/input"
-import { useState } from "react"
 
 interface CategoryInputProps {
 	category: Category,
 	handleValueChange: (key: string,newValue: number | undefined) => void,
 }
+
 export default function CategoryInput({category,handleValueChange} : CategoryInputProps){
-
-
 	const renderInputType= (category: Category) => {
 		const inputSlider = (<Slider className="w-24 accent-blue-500" max={100} min={0} onValueChange={handleChangeCategoryValue}></Slider>)
-		switch(category.categoryType){
+		switch(category.type){
 			case 'fixed':
 				return <Input className="w-24"></Input>;
 			case 'leisure':
