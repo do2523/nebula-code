@@ -3,8 +3,11 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 import { financialData, userSpendingCategories } from "note/server/db/schema";
 import { eq } from "drizzle-orm";
 import type { Category } from "note/app/_components/budgeting/BudgetingCategorySelector";
-import { api } from "note/trpc/server";
 import { DefaultCategories } from "note/app/_components/dashboard/defaultCategories";
+import { TRPCError } from "@trpc/server";
+import type { db } from "note/server/db";
+import { createForUser } from "./financialData";
+type dbType = typeof db;
 
 export const CategoryZod = z.object({
 	id: z.string(),
@@ -25,7 +28,34 @@ export const CategoryZod = z.object({
 		return newCategoryZod;
 	})
 }
+
 type CategoryZod = z.infer<typeof CategoryZod>;
+
+async function updateCategories(db: dbType, input: Category[]) {
+	const categories = input;
+
+	for(const category of categories){
+		console.log(category);
+		const categoryExists = await db.query.userSpendingCategories.findFirst({
+			where: (spendingCategory,{eq}) => eq(spendingCategory.id,category?.id),
+		});
+		//console.log(categoryExists);
+		if(!categoryExists){
+			await db.insert(userSpendingCategories).values({
+				id: category.id,
+				userId: category.userId,
+				categoryName: category.name,
+				categoryType: category.type,
+				value: category.value,
+			});
+		}
+		else{
+			console.log("updating");
+			await db.update(userSpendingCategories).set({value: category.value}).where(eq(userSpendingCategories.id,category.id));
+		}
+	}
+}
+
 export const userRouter = createTRPCRouter({
     getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
         return await ctx.db.query.users.findFirst({
@@ -41,7 +71,7 @@ export const userRouter = createTRPCRouter({
         });
 
 		// userSpendingCategories table doesn't exist in db
-		if(!categories) {
+		if(categories.length == 0) {
 			// create userSpendingCategories with default categories
 			const defaultCategories = DefaultCategories.map(defaultCategory => {
 				return {
@@ -50,18 +80,18 @@ export const userRouter = createTRPCRouter({
 					name: defaultCategory.name,
 					type: defaultCategory.type,
 					value: 0,
-				} as Category;
-			})
+				};
+			});
 			
-			await api.user.updateCategories(defaultCategories); 
+			await updateCategories(ctx.db, defaultCategories); 
 
 			categories = await ctx.db.query.userSpendingCategories.findMany({
 				where: (category, { eq }) => eq(category.userId, input),
 			});
 
 			// userSpendingCategories table couldn't be created
-			if(!categories) {
-				throw new Error("userSpendingCategories table couldn't be created for the user");
+			if(categories.length == 0) {
+				throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Could not create userSpendingCategories table for user' });
 			}
 		}
 
@@ -71,8 +101,8 @@ export const userRouter = createTRPCRouter({
 				userId: category.userId,
 				name: category.categoryName,
 				type: category.categoryType,
-				value: 0,
-			} as Category;
+				value: category.value,
+			};
 		});
 
 		return formattedCategories;
@@ -86,7 +116,7 @@ export const userRouter = createTRPCRouter({
 		// financialData table doesn't exist in db
 		if(!data) {
 			// try to create financialData table
-			void api.financialData.createForUser({ userId: input });
+			await createForUser(ctx.db, { userId: input });
 
 			data = await ctx.db.query.financialData.findFirst({
 				where: (data, { eq }) => eq(data.userId, input),
@@ -94,7 +124,7 @@ export const userRouter = createTRPCRouter({
 
 			// financialData table couldn't be created
 			if(!data) {
-				throw new Error("FinancialData table couldn't be created for the user");
+				throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Could not create financialData table for user' });
 			}
 		}
 
@@ -109,27 +139,6 @@ export const userRouter = createTRPCRouter({
     }),
 
 	updateCategories: protectedProcedure.input(CategoryZod.array()).mutation(async ({ctx,input}) => {
-		const categories = input;
-
-		for(const category of categories){
-			console.log(category);
-			const categoryExists = await ctx.db.query.userSpendingCategories.findFirst({
-				where: (spendingCategory,{eq}) => eq(spendingCategory.id,category?.id),
-			});
-			//console.log(categoryExists);
-			if(!categoryExists){
-				await ctx.db.insert(userSpendingCategories).values({
-					id: category.id,
-					userId: category.userId,
-					categoryName: category.name,
-					categoryType: category.type,
-					value: category.value,
-				});
-			}
-			else{
-				console.log("updating");
-				await ctx.db.update(userSpendingCategories).set({value: category.value}).where(eq(userSpendingCategories.id,category.id));
-			}
-		}
+		return updateCategories(ctx.db, input);
 	}),
 })

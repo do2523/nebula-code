@@ -11,11 +11,11 @@ import type { z } from "zod";
 
 export type Category = z.infer<typeof CategoryZod>
 
-
 interface BudgetCategorySelectorProps {
 	userId: string,
 	userCategories: Category[],
 }
+
 export default function BudgetCategorySelector({ userId, userCategories }: BudgetCategorySelectorProps) {
 	const [categories, setCategories] = useState<Category[]>(userCategories);
 	console.log(categories);
@@ -24,8 +24,7 @@ export default function BudgetCategorySelector({ userId, userCategories }: Budge
 		void submitBudgetPreferences(e, categories);
 	}
 	const addCategory = (categoryName: string, categoryType: string) => {
-		if(categories.find(e => e.name == categoryName))
-			return;
+		if(categories.find(e => e.name == categoryName)) return;
 		const newCategory: Category = {
 
 			id: crypto.randomUUID(),

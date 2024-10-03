@@ -16,6 +16,8 @@ export default async function Dashboard() {
 
 	const categories = await api.user.getCategoriesOfUser(session.user.id);
 	const financialData = await api.user.getFinancialData(session.user.id);
+
+	console.log(categories);
 	
   return (
     <div>

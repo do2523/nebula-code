@@ -13,7 +13,7 @@ export default async function Home() {
     if(!user) return;
 
     if(!user?.financialData) {
-      void api.financialData.createForUser({ userId: session.user.id });
+      await api.financialData.createForUser({ userId: session.user.id });
     }
     
     return <Dashboard/> 
